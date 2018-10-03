@@ -18,7 +18,7 @@ public class PlayerScript : MonoBehaviour {
     void Movement()
     {
         //IF USER IS PRESSING ARROW KEYS
-        if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow)) && rb2d.IsTouchingLayers(Physics2D.AllLayers))
+        if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow)))
         {
             Vector2 velocity = rb2d.velocity;
             float moveHorizontal = Input.GetAxis("Horizontal");
@@ -28,7 +28,7 @@ public class PlayerScript : MonoBehaviour {
                 rb2d.AddForce(movement * runForce);
             }
         }
-        else if(rb2d.IsTouchingLayers(Physics2D.AllLayers) && !Input.GetKey(KeyCode.Space))
+        else if(grounded == true && !Input.GetKey(KeyCode.Space))
         {
             rb2d.velocity = friction*rb2d.velocity;
         }
@@ -60,6 +60,9 @@ public class PlayerScript : MonoBehaviour {
     {
         if (other.gameObject.CompareTag("BasicPlatform")){
             grounded = true;
+        }else if (other.gameObject.CompareTag("Lava"))
+        {
+            Time.timeScale = 0;
         }
         Debug.Log("Touching the Ground");
     }
@@ -69,6 +72,8 @@ public class PlayerScript : MonoBehaviour {
             grounded = false;
         }
     }
+
+ 
 
     void FixedUpdate()
     {

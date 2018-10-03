@@ -20,7 +20,7 @@ public class CameraScript : MonoBehaviour
     void LateUpdate()
     {
         
-            Vector3 targetPosition = new Vector3(0, Player.transform.position.y, 0) + offset;
+            Vector3 targetPosition = new Vector3(Player.transform.position.x, Player.transform.position.y, 0) + offset;
             transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref velocity, smoothTime);
         
     }
