@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 61996484954793124}
   - component: {fileID: 60336654547411506}
   - component: {fileID: 114473390098172866}
+  - component: {fileID: 68408710148631998}
   m_Layer: 0
   m_Name: Basic Platform
   m_TagString: BasicPlatform
@@ -49,7 +50,7 @@ PolygonCollider2D:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1534733971053740}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 1
@@ -99,6 +100,28 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!68 &68408710148631998
+EdgeCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1534733971053740}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -0.5, y: -0.053128}
+  - {x: -0.5003355, y: 0.50138307}
+  - {x: -0.49954057, y: 0.84498256}
+  - {x: -0.49906287, y: 0.368964}
+  - {x: 0.49759227, y: -0.018652169}
+  - {x: 0.50011873, y: 0.7850081}
+  - {x: 0.5, y: 0}
 --- !u!114 &114473390098172866
 MonoBehaviour:
   m_ObjectHideFlags: 1

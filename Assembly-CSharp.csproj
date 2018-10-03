@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\BasicPlatformScript.cs" />
+    <Compile Include="Assets\Scripts\CameraScript.cs" />
     <Compile Include="Assets\Scripts\EnemyWalker.cs" />
     <Compile Include="Assets\Scripts\PlayerScript.cs" />
     <Reference Include="UnityEditor.StandardEvents">
