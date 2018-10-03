@@ -11,7 +11,7 @@ public class PlayerScript : MonoBehaviour {
 
     private Rigidbody2D rb2d;
     private Collider2D c2d;
-    public bool adjustCamera;
+    private bool grounded;
     private bool jump = false;
     // Use this for initialization
 
@@ -43,17 +43,30 @@ public class PlayerScript : MonoBehaviour {
 
     void Start () {
         rb2d = GetComponent<Rigidbody2D>();
-        c2d = GetComponent<Collider2D>();
-        adjustCamera = false;
+        c2d = GetComponent<BoxCollider2D>();
 	}
 
 
     // Update is called once per frame
     void Update () {
         transform.rotation = Quaternion.identity;
-        if (Input.GetKeyDown(KeyCode.Space) && rb2d.IsTouchingLayers(Physics2D.AllLayers))
+        if (Input.GetKeyDown(KeyCode.Space) && grounded == true)
         {
             jump = true;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("BasicPlatform")){
+            grounded = true;
+        }
+        Debug.Log("Touching the Ground");
+    }
+    void OnCollisionExit2D(Collision2D other)
+    {
+        if (other.gameObject.CompareTag("BasicPlatform")){
+            grounded = false;
         }
     }
 

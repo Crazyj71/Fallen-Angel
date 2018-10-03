@@ -50,6 +50,7 @@ public class EnemyWalker : MonoBehaviour {
     }
     // Update is called once per frame
     void Update () {
-		
-	}
+        transform.rotation = Quaternion.identity;
+
+    }
 }
