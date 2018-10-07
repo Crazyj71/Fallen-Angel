@@ -6,6 +6,9 @@ TagManager:
   tags:
   - BasicPlatform
   - Lava
+  - Enemy
+  - DisPlatform
+  - FallingPlatform
   layers:
   - Default
   - TransparentFX

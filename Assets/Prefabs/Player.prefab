@@ -21,9 +21,9 @@ GameObject:
   - component: {fileID: 4636462651389398}
   - component: {fileID: 212023364868617798}
   - component: {fileID: 50652021441255064}
-  - component: {fileID: 61518654053170828}
   - component: {fileID: 114338996287333924}
   - component: {fileID: 58550731367180386}
+  - component: {fileID: 60460560660766400}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -79,8 +79,8 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 4
---- !u!61 &61518654053170828
-BoxCollider2D:
+--- !u!60 &60460560660766400
+PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -101,9 +101,11 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0, y: 0.5}
+      - {x: -0.4330127, y: -0.25000003}
+      - {x: 0.43301272, y: -0.24999996}
 --- !u!114 &114338996287333924
 MonoBehaviour:
   m_ObjectHideFlags: 1

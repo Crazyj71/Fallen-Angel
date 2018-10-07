@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public class PlayerScript : MonoBehaviour {
+public class PlayerScript : MonoBehaviour
+{
     public float friction;
     public float runForce;
     public float jumpForce;
@@ -24,13 +25,14 @@ public class PlayerScript : MonoBehaviour {
             float moveHorizontal = Input.GetAxis("Horizontal");
             Vector2 movement = new Vector2(moveHorizontal, 0f);
             float currentspeed = moveHorizontal * rb2d.velocity.x;
-            if (currentspeed < maxRunSpeed) {
+            if (currentspeed < maxRunSpeed)
+            {
                 rb2d.AddForce(movement * runForce);
             }
         }
-        else if(grounded == true && !Input.GetKey(KeyCode.Space))
+        else if (grounded == true && !Input.GetKey(KeyCode.Space))
         {
-            rb2d.velocity = friction*rb2d.velocity;
+            rb2d.velocity = friction * rb2d.velocity;
         }
     }
 
@@ -41,14 +43,16 @@ public class PlayerScript : MonoBehaviour {
         jump = false;
     }
 
-    void Start () {
+    void Start()
+    {
         rb2d = GetComponent<Rigidbody2D>();
-        c2d = GetComponent<BoxCollider2D>();
-	}
+        c2d = GetComponent<PolygonCollider2D>();
+    }
 
 
     // Update is called once per frame
-    void Update () {
+    void Update()
+    {
         transform.rotation = Quaternion.identity;
         if (Input.GetKeyDown(KeyCode.Space) && grounded == true)
         {
@@ -58,9 +62,23 @@ public class PlayerScript : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("BasicPlatform")){
+        if (other.gameObject.CompareTag("BasicPlatform"))
+        {
             grounded = true;
-        }else if (other.gameObject.CompareTag("Lava"))
+        }
+        else if (other.gameObject.CompareTag("DisPlatform"))
+        {
+            grounded = true;
+        }
+        else if (other.gameObject.CompareTag("FallingPlatform"))
+        {
+            grounded = true;
+        }
+        else if (other.gameObject.CompareTag("Lava"))
+        {
+            Time.timeScale = 0;
+        }
+        else if (other.gameObject.CompareTag("Enemy"))
         {
             Time.timeScale = 0;
         }
@@ -68,16 +86,21 @@ public class PlayerScript : MonoBehaviour {
     }
     void OnCollisionExit2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("BasicPlatform")){
+        if (other.gameObject.CompareTag("BasicPlatform"))
+        {
+            grounded = false;
+        }
+        if (other.gameObject.CompareTag("DisPlatform"))
+        {
             grounded = false;
         }
     }
 
- 
+
 
     void FixedUpdate()
     {
-        
+
         Movement();
 
         if (jump)
