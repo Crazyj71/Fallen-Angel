@@ -89,8 +89,10 @@ public class PlayerScript : MonoBehaviour
         if (other.gameObject.CompareTag("BasicPlatform"))
         {
             grounded = false;
-        }
-        if (other.gameObject.CompareTag("DisPlatform"))
+        }else if (other.gameObject.CompareTag("DisPlatform"))
+        {
+            grounded = false;
+        }else if (other.gameObject.CompareTag("FallingPlatform"))
         {
             grounded = false;
         }

@@ -5,17 +5,11 @@ using UnityEngine;
 public class Disappear_Platform : MonoBehaviour {
     public float DisDelay;
     private Rigidbody2D rb;
-    private bool active;
+   
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         rb.gameObject.SetActive(true);
-        active = true;
-    }
-
-    private void LateUpdate()
-    {
-
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -31,10 +25,4 @@ public class Disappear_Platform : MonoBehaviour {
         rb.gameObject.SetActive(false);
        
     }
-
-
-
-
-
-
 }
