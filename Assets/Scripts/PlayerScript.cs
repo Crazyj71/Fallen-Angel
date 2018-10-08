@@ -74,6 +74,10 @@ public class PlayerScript : MonoBehaviour
         {
             grounded = true;
         }
+        else if (other.gameObject.CompareTag("MovingPlatform"))
+        {
+            grounded = true;
+        }
         else if (other.gameObject.CompareTag("Lava"))
         {
             Time.timeScale = 0;
@@ -89,10 +93,16 @@ public class PlayerScript : MonoBehaviour
         if (other.gameObject.CompareTag("BasicPlatform"))
         {
             grounded = false;
-        }else if (other.gameObject.CompareTag("DisPlatform"))
+        }
+        else if (other.gameObject.CompareTag("DisPlatform"))
         {
             grounded = false;
-        }else if (other.gameObject.CompareTag("FallingPlatform"))
+        }
+        else if (other.gameObject.CompareTag("FallingPlatform"))
+        {
+            grounded = false;
+        }
+        else if (other.gameObject.CompareTag("MovingPlatform"))
         {
             grounded = false;
         }

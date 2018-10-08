@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - DisPlatform
   - FallingPlatform
+  - MovingPlatform
   layers:
   - Default
   - TransparentFX

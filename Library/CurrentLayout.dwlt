@@ -554,8 +554,8 @@ MonoBehaviour:
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: e20b0000
-    m_LastClickedID: 3042
+    m_SelectedIDs: 94f5ffff
+    m_LastClickedID: -2668
     m_ExpandedIDs: e6fbffff00000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -572,7 +572,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 0
-      m_ClientGUIView: {fileID: 0}
+      m_ClientGUIView: {fileID: 4}
     m_SearchString: 
   m_ExpandedScenes:
   - SampleScene
@@ -606,14 +606,14 @@ MonoBehaviour:
     height: 336
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SceneLighting: 1
-  lastFramingTime: 6287.210900068283
+  lastFramingTime: 336.29298198223114
   m_2DMode: 1
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 7.263654, y: 20.263376, z: -0.4729589}
+    m_Target: {x: 1.0442978, y: 12.28833, z: -0.1403461}
     speed: 2
-    m_Value: {x: 7.263654, y: 20.263376, z: -0.4729589}
+    m_Value: {x: 1.0442978, y: 12.28833, z: -0.1403461}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -645,9 +645,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 57.96948
+    m_Target: 34.956284
     speed: 2
-    m_Value: 57.96948
+    m_Value: 34.956284
   m_Ortho:
     m_Target: 1
     speed: 2
