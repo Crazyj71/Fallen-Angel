@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovingPlatform : MonoBehaviour {
+public class MovingPlatform : MonoBehaviour
+{
 
-    public float rightLimit = 2.5f;
-    public float leftLimit = -2.5f;
+    public float rightLimit;
+    public float leftLimit;
     public float speed = 2.0f;
     private int direction = 1;
     Vector2 movement;
     void Update()
     {
-        if (transform.position.x > rightLimit)
+        if (transform.localPosition.x > rightLimit)
         {
             direction = -1;
         }
-        else if (transform.position.x < leftLimit)
+        else if (transform.localPosition.x < leftLimit)
         {
             direction = 1;
         }

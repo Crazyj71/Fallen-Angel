@@ -14,6 +14,7 @@ public class PlayerScript : MonoBehaviour
     private Collider2D c2d;
     private bool grounded;
     private bool jump = false;
+    private GameObject movingPlatform;
     // Use this for initialization
 
     void Movement()
@@ -59,6 +60,8 @@ public class PlayerScript : MonoBehaviour
             jump = true;
         }
     }
+
+
 
     void OnCollisionEnter2D(Collision2D other)
     {
@@ -122,3 +125,4 @@ public class PlayerScript : MonoBehaviour
 
     }
 }
+

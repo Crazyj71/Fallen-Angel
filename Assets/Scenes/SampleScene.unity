@@ -1367,7 +1367,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1826115242}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db7515f5a64664bcdbb5f829398aa923, type: 3}
+  m_Script: {fileID: 11500000, guid: b2cc07b0c1fadc3449dfe238b117bf61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rightLimit: 2.5
@@ -1393,6 +1393,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1826115248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1826115242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5130abfda81c7498897b21465fb28513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1913087057
 Prefab:
   m_ObjectHideFlags: 0
@@ -1599,11 +1610,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4444120592020912, guid: dff88334221d6ea4a8709b3f070b97b5, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -0.02
+      value: 6.2
       objectReference: {fileID: 0}
     - target: {fileID: 4444120592020912, guid: dff88334221d6ea4a8709b3f070b97b5, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 13.77
+      value: -0.6
       objectReference: {fileID: 0}
     - target: {fileID: 4444120592020912, guid: dff88334221d6ea4a8709b3f070b97b5, type: 2}
       propertyPath: m_LocalPosition.z
