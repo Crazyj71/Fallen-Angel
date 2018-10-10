@@ -12,7 +12,7 @@ public class PlayerScript : MonoBehaviour
     public bool hasSword;
     public bool facingRight;
 
-    public RuntimeAnimatorController animStanding;
+    /*public RuntimeAnimatorController animStanding;
     public RuntimeAnimatorController animStandingWithSword;
     public RuntimeAnimatorController animRunning;
     public RuntimeAnimatorController animRunningWithSword;
@@ -20,9 +20,9 @@ public class PlayerScript : MonoBehaviour
     public RuntimeAnimatorController animJumpingWithSword;
     public RuntimeAnimatorController animSwingingSword;
     public RuntimeAnimatorController animPunching;
+    */
 
-    public Animator anim;
-
+    private Animator anim;
     private Rigidbody2D rb2d;
     private Collider2D c2d;
     private bool grounded;
@@ -42,22 +42,24 @@ public class PlayerScript : MonoBehaviour
         {
             if (grounded == true && running == false)
             {
-                this.GetComponent<Animator>().runtimeAnimatorController = animStandingWithSword as RuntimeAnimatorController;
+                anim.SetBool("isRunning", false);
 
             }
             else if (grounded == true && running == true)
             {
-                this.GetComponent<Animator>().runtimeAnimatorController = animRunningWithSword as RuntimeAnimatorController;
-
+                anim.SetBool("isRunning", true);
             }
-            else if (jump == true || grounded == false)
+            else if (grounded == false)
             {
-                this.GetComponent<Animator>().runtimeAnimatorController = animJumpingWithSword as RuntimeAnimatorController;
-
+      //          anim.SetBool("isGrounded", false);
+            }
+            else if (grounded == true)
+            {
+      //          anim.SetBool("isGrounded", true);
             }
             else if (attacking == true)
             {
-                this.GetComponent<Animator>().runtimeAnimatorController = animSwingingSword as RuntimeAnimatorController;
+          //      this.GetComponent<Animator>().runtimeAnimatorController = animSwingingSword as RuntimeAnimatorController;
 
             }
         }
@@ -65,22 +67,25 @@ public class PlayerScript : MonoBehaviour
         {
             if (grounded == true && running == false)
             {
-                this.GetComponent<Animator>().runtimeAnimatorController = animStanding as RuntimeAnimatorController;
+                anim.SetBool("isRunning", false);
 
             }
             else if (grounded == true && running == true)
             {
-                this.GetComponent<Animator>().runtimeAnimatorController = animRunning as RuntimeAnimatorController;
+                anim.SetBool("isRunning", true);
 
             }
-            else if (jump == true || grounded == false)
+            else if (grounded == false)
             {
-                this.GetComponent<Animator>().runtimeAnimatorController = animJumping as RuntimeAnimatorController;
-
+    //            anim.SetBool("isGrounded", false);
+            }
+            else if (grounded == true)
+            {
+    //            anim.SetBool("isGrounded", true);
             }
             else if (attacking == true)
             {
-                this.GetComponent<Animator>().runtimeAnimatorController = animPunching as RuntimeAnimatorController;
+                //this.GetComponent<Animator>().runtimeAnimatorController = animPunching as RuntimeAnimatorController;
 
             }
         }
@@ -93,8 +98,7 @@ public class PlayerScript : MonoBehaviour
         //IF USER IS PRESSING ARROW KEYS
         if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow)))
         {
-            running = true;
-            Animate();
+            if(grounded) running = true;
             Vector2 velocity = rb2d.velocity;
             float moveHorizontal = Input.GetAxis("Horizontal");
             Vector2 movement = new Vector2(moveHorizontal, 0f);
@@ -108,8 +112,9 @@ public class PlayerScript : MonoBehaviour
         {
             rb2d.velocity = friction * rb2d.velocity;
         }
+        else running = false;
 
-        running = false;
+        
     }
 
     void Jump()
@@ -118,15 +123,14 @@ public class PlayerScript : MonoBehaviour
         rb2d.AddForce(new Vector2(0f, jumpForce));
         jump = false;
 
-
         if (hasSword)
         {
-            this.GetComponent<Animator>().runtimeAnimatorController = animJumpingWithSword as RuntimeAnimatorController;
+          //  this.GetComponent<Animator>().runtimeAnimatorController = animJumpingWithSword as RuntimeAnimatorController;
 
         }
         else
         {
-            this.GetComponent<Animator>().runtimeAnimatorController = animJumping as RuntimeAnimatorController;
+            //this.GetComponent<Animator>().runtimeAnimatorController = animJumping as RuntimeAnimatorController;
 
         }
 
@@ -135,7 +139,7 @@ public class PlayerScript : MonoBehaviour
     void CollectSword()
     {
         hasSword = true;
-        this.GetComponent<Animator>().runtimeAnimatorController = animStandingWithSword as RuntimeAnimatorController;
+        //this.GetComponent<Animator>().runtimeAnimatorController = animStandingWithSword as RuntimeAnimatorController;
     }
 
     void Attack()
@@ -149,8 +153,7 @@ public class PlayerScript : MonoBehaviour
 
     void Start()
     {
-
-        animStanding 
+        anim = GetComponentInParent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
         c2d = GetComponent<PolygonCollider2D>();
     }
@@ -164,8 +167,19 @@ public class PlayerScript : MonoBehaviour
         {
             jump = true;
         }
-    }
 
+        if(Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow)){
+            running = false;
+        }
+
+        if (rb2d.IsTouchingLayers(LayerMask.NameToLayer("Platforms")))
+        {
+            anim.SetBool("isGrounded", true);
+        }
+        else anim.SetBool("isGrounded", false);
+        
+        
+    }
 
 
     void OnCollisionEnter2D(Collision2D other)
@@ -201,9 +215,10 @@ public class PlayerScript : MonoBehaviour
 
         if (grounded == true)
         {
-            this.GetComponent<Animator>().runtimeAnimatorController = animStandingWithSword as RuntimeAnimatorController;
+           // this.GetComponent<Animator>().runtimeAnimatorController = animStandingWithSword as RuntimeAnimatorController;
         }
     }
+    /*
     void OnCollisionExit2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("BasicPlatform"))
@@ -223,15 +238,11 @@ public class PlayerScript : MonoBehaviour
             grounded = false;
         }
     }
-
+    */
     void FixedUpdate()
     {
 
-        if (Input.anyKeyDown)
-        {
-            Animate();
-        }
-
+        Animate();
         Movement();
 
         if (jump)
