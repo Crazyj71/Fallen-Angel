@@ -5,7 +5,7 @@ using UnityEngine;
 public class Disappear_Platform : MonoBehaviour {
     public float DisDelay;
     private Rigidbody2D rb;
-   
+    public PlayerScript player;
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -22,7 +22,8 @@ public class Disappear_Platform : MonoBehaviour {
     IEnumerator Delay()
     {
         yield return new WaitForSeconds(DisDelay);
-        rb.gameObject.SetActive(false);
-       
+        player.grounded = false;
+
+        GetComponent<Rigidbody2D>().Sleep();
     }
 }

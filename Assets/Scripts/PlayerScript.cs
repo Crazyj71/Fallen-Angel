@@ -11,28 +11,18 @@ public class PlayerScript : MonoBehaviour
     public float maxRunSpeed = 20f;
     public bool hasSword;
     public bool facingRight;
-
-    /*public RuntimeAnimatorController animStanding;
-    public RuntimeAnimatorController animStandingWithSword;
-    public RuntimeAnimatorController animRunning;
-    public RuntimeAnimatorController animRunningWithSword;
-    public RuntimeAnimatorController animJumping;
-    public RuntimeAnimatorController animJumpingWithSword;
-    public RuntimeAnimatorController animSwingingSword;
-    public RuntimeAnimatorController animPunching;
-    */
+    public float health = 100f;
 
     private Animator anim;
     private Rigidbody2D rb2d;
     private Collider2D c2d;
-    private bool grounded;
+    public bool grounded;
     private bool running;
     private bool attacking;
     private bool jump = false;
     private GameObject movingPlatform;
     private GameObject SwordSwing;
-
-
+    public GameObject Sword;
 
     // Use this for initialization
 
@@ -51,11 +41,11 @@ public class PlayerScript : MonoBehaviour
             }
             else if (grounded == false)
             {
-      //          anim.SetBool("isGrounded", false);
+                anim.SetBool("isGrounded", false);
             }
             else if (grounded == true)
             {
-      //          anim.SetBool("isGrounded", true);
+                anim.SetBool("isGrounded", true);
             }
             else if (attacking == true)
             {
@@ -77,11 +67,11 @@ public class PlayerScript : MonoBehaviour
             }
             else if (grounded == false)
             {
-    //            anim.SetBool("isGrounded", false);
+                anim.SetBool("isGrounded", false);
             }
             else if (grounded == true)
             {
-    //            anim.SetBool("isGrounded", true);
+                anim.SetBool("isGrounded", true);
             }
             else if (attacking == true)
             {
@@ -98,7 +88,18 @@ public class PlayerScript : MonoBehaviour
         //IF USER IS PRESSING ARROW KEYS
         if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.LeftArrow)))
         {
-            if(grounded) running = true;
+
+            if (Input.GetKey(KeyCode.RightArrow)){
+                facingRight = true;
+
+            }
+            else 
+             if (Input.GetKey(KeyCode.LeftArrow)){
+                facingRight = false;
+            }
+
+
+            if (grounded) running = true;
             Vector2 velocity = rb2d.velocity;
             float moveHorizontal = Input.GetAxis("Horizontal");
             Vector2 movement = new Vector2(moveHorizontal, 0f);
@@ -136,10 +137,18 @@ public class PlayerScript : MonoBehaviour
 
     }
 
+    void Damage(int damage, Collision2D other, int force)
+    {
+        Vector3 dir = other.transform.position - transform.position;
+        dir = -dir.normalized;
+        rb2d.AddForce(dir * force);
+        health -= damage;
+
+    }
+
     void CollectSword()
     {
         hasSword = true;
-        //this.GetComponent<Animator>().runtimeAnimatorController = animStandingWithSword as RuntimeAnimatorController;
     }
 
     void Attack()
@@ -147,7 +156,9 @@ public class PlayerScript : MonoBehaviour
         attacking = true;
         if (hasSword)
         {
-            SwordSwing.SetActive(true);
+                Sword.SetActive(true);
+                StartCoroutine(AttackDelay());
+            
         }
     }
 
@@ -156,19 +167,20 @@ public class PlayerScript : MonoBehaviour
         anim = GetComponentInParent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
         c2d = GetComponent<PolygonCollider2D>();
+        Sword.SetActive(false);
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        transform.rotation = Quaternion.identity;
         if (Input.GetKeyDown(KeyCode.Space) && grounded == true)
         {
             jump = true;
         }
 
-        if(Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow)){
+        if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
+        {
             running = false;
         }
 
@@ -176,10 +188,32 @@ public class PlayerScript : MonoBehaviour
         {
             anim.SetBool("isGrounded", true);
         }
-        else anim.SetBool("isGrounded", false);
+
+        if (facingRight == false)
+        {
+            transform.rotation = Quaternion.Euler(0, 180f, 0);
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.X) && attacking == false)
+        {
+            Attack();
+        }
         
-        
+
     }
+
+    IEnumerator AttackDelay()
+    {
+        yield return new WaitForSeconds(.25f);
+        Sword.SetActive(false);
+        attacking = false;
+    }
+
 
 
     void OnCollisionEnter2D(Collision2D other)
@@ -204,10 +238,12 @@ public class PlayerScript : MonoBehaviour
         {
             Time.timeScale = 0;
         }
-        else if (other.gameObject.CompareTag("Enemy"))
+        else if (other.gameObject.CompareTag("EnemyWalker"))
         {
-            Time.timeScale = 0;
-        }else if (other.gameObject.CompareTag("Sword"))
+            Damage(10, other, 500);
+            
+
+        }else if (other.gameObject.CompareTag("SwordPickup"))
         {
             CollectSword();
             other.gameObject.SetActive(false);
@@ -215,10 +251,10 @@ public class PlayerScript : MonoBehaviour
 
         if (grounded == true)
         {
-           // this.GetComponent<Animator>().runtimeAnimatorController = animStandingWithSword as RuntimeAnimatorController;
+            anim.SetBool("isGrounded", true);
         }
     }
-    /*
+    
     void OnCollisionExit2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("BasicPlatform"))
@@ -238,7 +274,7 @@ public class PlayerScript : MonoBehaviour
             grounded = false;
         }
     }
-    */
+    
     void FixedUpdate()
     {
 
@@ -248,6 +284,7 @@ public class PlayerScript : MonoBehaviour
         if (jump)
         {
             Jump();
+            anim.SetBool("isGrounded", false);
         }
 
     }

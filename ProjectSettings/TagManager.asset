@@ -11,6 +11,8 @@ TagManager:
   - FallingPlatform
   - MovingPlatform
   - Sword
+  - SwordPickup
+  - EnemyWalker
   layers:
   - Default
   - TransparentFX
