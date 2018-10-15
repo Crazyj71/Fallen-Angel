@@ -121,6 +121,12 @@ MonoBehaviour:
   runForce: 20
   jumpForce: 500
   maxRunSpeed: 10
+  hasSword: 0
+  facingRight: 0
+  health: 100
+  grounded: 0
+  jump: 0
+  Sword: {fileID: 0}
 --- !u!212 &212023364868617798
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -19,7 +19,7 @@ public class PlayerScript : MonoBehaviour
     public bool grounded;
     private bool running;
     private bool attacking;
-    private bool jump = false;
+    public bool jump = false;
     private GameObject movingPlatform;
     private GameObject SwordSwing;
     public GameObject Sword;
@@ -157,8 +157,8 @@ public class PlayerScript : MonoBehaviour
         if (hasSword)
         {
                 Sword.SetActive(true);
+                
                 StartCoroutine(AttackDelay());
-            
         }
     }
 
@@ -240,7 +240,7 @@ public class PlayerScript : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("EnemyWalker"))
         {
-            Damage(10, other, 500);
+            Damage(10, other, 300);
             
 
         }else if (other.gameObject.CompareTag("SwordPickup"))
@@ -284,9 +284,9 @@ public class PlayerScript : MonoBehaviour
         if (jump)
         {
             Jump();
+            grounded = false;
             anim.SetBool("isGrounded", false);
         }
-
     }
 }
 

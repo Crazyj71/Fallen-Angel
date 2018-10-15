@@ -5,9 +5,11 @@ using UnityEngine;
 public class Disappear_Platform : MonoBehaviour {
     public float DisDelay;
     private Rigidbody2D rb;
+    private Collider2D c2d;
     public PlayerScript player;
     void Start()
     {
+        c2d = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
         rb.gameObject.SetActive(true);
     }
@@ -22,8 +24,8 @@ public class Disappear_Platform : MonoBehaviour {
     IEnumerator Delay()
     {
         yield return new WaitForSeconds(DisDelay);
-        player.grounded = false;
+        transform.position += transform.position * 10;
 
-        GetComponent<Rigidbody2D>().Sleep();
+
     }
 }

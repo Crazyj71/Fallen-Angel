@@ -103,6 +103,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   runForce: 5
   maxRunSpeed: 1
+  health: 10
+  dam: 5
+  hitForce: 500
 --- !u!212 &212845678503242394
 SpriteRenderer:
   m_ObjectHideFlags: 1

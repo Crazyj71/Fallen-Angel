@@ -502,6 +502,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1477033533574328, guid: 598967a1c8c495b42be79f37f02b43a3,
     type: 2}
   m_PrefabInternal: {fileID: 838359786}
+--- !u!114 &333918777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 333918773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29209c11004e5a84e86cf85b7e6ae904, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &353284435 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4568296782397580, guid: c095ec8898e9f5d469bd4700015451de,
@@ -567,6 +578,11 @@ Prefab:
     - target: {fileID: 1863121117240110, guid: c095ec8898e9f5d469bd4700015451de, type: 2}
       propertyPath: m_TagString
       value: EnemyWalker
+      objectReference: {fileID: 0}
+    - target: {fileID: 114955269567055844, guid: c095ec8898e9f5d469bd4700015451de,
+        type: 2}
+      propertyPath: dam
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c095ec8898e9f5d469bd4700015451de, type: 2}
@@ -968,7 +984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 635794ca7dec640728e27511236283f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DisDelay: 0
+  DisDelay: 2
   player: {fileID: 1580938038}
 --- !u!50 &867811211
 Rigidbody2D:
@@ -1131,11 +1147,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4444120592020912, guid: dff88334221d6ea4a8709b3f070b97b5, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 6.5
+      value: 7.02
       objectReference: {fileID: 0}
     - target: {fileID: 4444120592020912, guid: dff88334221d6ea4a8709b3f070b97b5, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 12.2
+      value: -0.86
       objectReference: {fileID: 0}
     - target: {fileID: 4444120592020912, guid: dff88334221d6ea4a8709b3f070b97b5, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1292,7 +1308,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ab18d83abded4a5e85a3f1ae83b2e86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fallDelay: 0
+  fallDelay: 0.5
+  activeDelay: 1.5
 --- !u!1 &1293281828
 GameObject:
   m_ObjectHideFlags: 0
@@ -1335,11 +1352,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4444120592020912, guid: dff88334221d6ea4a8709b3f070b97b5, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 12.502
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4444120592020912, guid: dff88334221d6ea4a8709b3f070b97b5, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.87
+      value: -0.23
       objectReference: {fileID: 0}
     - target: {fileID: 4444120592020912, guid: dff88334221d6ea4a8709b3f070b97b5, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1658,11 +1675,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4444120592020912, guid: dff88334221d6ea4a8709b3f070b97b5, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -5.46
+      value: -5.02
       objectReference: {fileID: 0}
     - target: {fileID: 4444120592020912, guid: dff88334221d6ea4a8709b3f070b97b5, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 9.28
+      value: 8.56
       objectReference: {fileID: 0}
     - target: {fileID: 4444120592020912, guid: dff88334221d6ea4a8709b3f070b97b5, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1855,11 +1872,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4444120592020912, guid: dff88334221d6ea4a8709b3f070b97b5, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 8.54
+      value: 0.18
       objectReference: {fileID: 0}
     - target: {fileID: 4444120592020912, guid: dff88334221d6ea4a8709b3f070b97b5, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -0.6
+      value: 14.33
       objectReference: {fileID: 0}
     - target: {fileID: 4444120592020912, guid: dff88334221d6ea4a8709b3f070b97b5, type: 2}
       propertyPath: m_LocalPosition.z

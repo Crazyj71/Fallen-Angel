@@ -6,7 +6,10 @@ public class EnemyWalker : MonoBehaviour {
 
     public float runForce;
     public float maxRunSpeed;
-    public float health = 10f;
+    public float health;
+    public float dam;
+    public int hitForce;
+
 
     private Rigidbody2D rb2d;
     float movementDirection = 1.0f;
@@ -41,13 +44,15 @@ public class EnemyWalker : MonoBehaviour {
     }
 
 
-    void Damage(int damage, Collision2D other, int force)
+    void Damage(float damage, Collider2D other, int force)
     {
         Vector3 dir = other.transform.position - transform.position;
         dir = -dir.normalized;
         rb2d.AddForce(dir * force);
         health -= damage;
-
+        if(health <= 0){
+            rb2d.gameObject.SetActive(false);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -58,7 +63,7 @@ public class EnemyWalker : MonoBehaviour {
         }
         if(other.gameObject.CompareTag("Sword"))
         {
-            Damage(10, other.GetComponentInParent<Collision2D>(), 500);
+            Damage(dam, other.GetComponentInParent<Collider2D>(), hitForce);
         }
     }
     void FixedUpdate()
