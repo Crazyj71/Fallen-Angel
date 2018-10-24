@@ -574,6 +574,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29209c11004e5a84e86cf85b7e6ae904, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  script: {fileID: 2125571682}
+--- !u!50 &333918778
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 333918773}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
 --- !u!1001 &341450666
 Prefab:
   m_ObjectHideFlags: 0
@@ -5678,6 +5699,16 @@ Prefab:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 60982938673481622, guid: 598967a1c8c495b42be79f37f02b43a3,
+        type: 2}
+      propertyPath: m_AutoTiling
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 60982938673481622, guid: 598967a1c8c495b42be79f37f02b43a3,
+        type: 2}
+      propertyPath: m_UsedByComposite
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 598967a1c8c495b42be79f37f02b43a3, type: 2}
   m_IsPrefabAsset: 0
@@ -6671,3 +6702,4 @@ MonoBehaviour:
   dam: 5
   hitForce: 500
   sword: {fileID: 798704578}
+  coroutineOn: 0

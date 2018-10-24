@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SwordScript : MonoBehaviour {
-  // Use this for initialization
-	void Start () {
+
+    void Start () {
 		
 	}
 	

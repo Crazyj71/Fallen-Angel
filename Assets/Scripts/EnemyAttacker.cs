@@ -12,6 +12,7 @@ public class EnemyAttacker : MonoBehaviour
     public float dam;
     public int hitForce;
     public GameObject sword;
+    public bool coroutineOn;
 
     private Rigidbody2D rb2d;
     float movementDirection = 1.0f;
@@ -21,15 +22,18 @@ public class EnemyAttacker : MonoBehaviour
     {
         rb2d = GetComponent<Rigidbody2D>();
         sword.SetActive(false);
+        coroutineOn = false;
     }
 
     IEnumerator AttackDelay()
     {
-        yield return new WaitForSeconds(1f);
-        sword.SetActive(true);
+        coroutineOn = true;
         yield return new WaitForSeconds(.25f);
+        sword.SetActive(true);
+        yield return new WaitForSeconds(2f);
         sword.SetActive(false);
         yield return new WaitForSeconds(1f);
+        coroutineOn = false;
     }
 
     void Attack()
@@ -75,6 +79,8 @@ public class EnemyAttacker : MonoBehaviour
         }
     }
 
+
+
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("BasicPlatform"))
@@ -97,7 +103,9 @@ public class EnemyAttacker : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Sword"))
         {
+
             Damage(dam, other.GetComponentInParent<Collider2D>(), hitForce);
+
         }
         if (other.gameObject.CompareTag("Player"))
         {
@@ -130,12 +138,9 @@ public class EnemyAttacker : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
-         if(attacking == true)
+        if (attacking == true && coroutineOn == false)
         {
             StartCoroutine(AttackDelay());
         }
-
     }
 }
