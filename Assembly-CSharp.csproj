@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\CameraScript.cs" />
     <Compile Include="Assets\Scripts\Disappear_Platform.cs" />
     <Compile Include="Assets\Scripts\Enemy_movement.cs" />
+    <Compile Include="Assets\Scripts\EnemyAttacker.cs" />
     <Compile Include="Assets\Scripts\EnemyFlyerScript.cs" />
     <Compile Include="Assets\Scripts\EnemyWalker.cs" />
     <Compile Include="Assets\Scripts\FallingPlatform.cs" />

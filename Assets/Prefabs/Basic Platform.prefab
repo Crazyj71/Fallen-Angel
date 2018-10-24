@@ -23,9 +23,10 @@ GameObject:
   - component: {fileID: 61996484954793124}
   - component: {fileID: 50354392722341116}
   - component: {fileID: 114659725306315388}
+  - component: {fileID: 68822670002801070}
   m_Layer: 8
   m_Name: Basic Platform
-  m_TagString: MovingPlatform
+  m_TagString: BasicPlatform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1534733971053740}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.18, y: 14.33, z: 0}
+  m_LocalPosition: {x: 10.764529, y: -1.4918222, z: 0}
   m_LocalScale: {x: 6.48, y: 0.50014, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -88,6 +89,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.99999857}
   m_EdgeRadius: 0
+--- !u!68 &68822670002801070
+EdgeCollider2D:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1534733971053740}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -0.5, y: 0}
+  - {x: -0.49994117, y: 0.83488595}
+  - {x: -0.4717286, y: 0.116311885}
+  - {x: 0.47644567, y: 0.28787208}
+  - {x: 0.50064415, y: 0.9101868}
+  - {x: 0.49669036, y: -0.4430937}
 --- !u!114 &114659725306315388
 MonoBehaviour:
   m_ObjectHideFlags: 1

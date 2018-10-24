@@ -13,6 +13,8 @@ TagManager:
   - Sword
   - SwordPickup
   - EnemyWalker
+  - EnemyAttacker
+  - EnemySword
   layers:
   - Default
   - TransparentFX

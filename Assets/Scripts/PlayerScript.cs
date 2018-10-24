@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -12,6 +12,7 @@ public class PlayerScript : MonoBehaviour
     public bool hasSword;
     public bool facingRight;
     public float health = 100f;
+    public Text healthText;
 
     private Animator anim;
     private Rigidbody2D rb2d;
@@ -146,6 +147,16 @@ public class PlayerScript : MonoBehaviour
 
     }
 
+    void DamageTrigger(int damage, Collider2D other, int force)
+    {
+        Vector3 dir = other.transform.position - transform.position;
+        dir = -dir.normalized;
+        rb2d.AddForce(dir * force);
+        health -= damage;
+
+    }
+
+
     void CollectSword()
     {
         hasSword = true;
@@ -160,6 +171,10 @@ public class PlayerScript : MonoBehaviour
                 
                 StartCoroutine(AttackDelay());
         }
+        else
+        {
+            attacking = false;
+        }
     }
 
     void Start()
@@ -168,6 +183,7 @@ public class PlayerScript : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         c2d = GetComponent<PolygonCollider2D>();
         Sword.SetActive(false);
+        healthText.text = health.ToString();
     }
 
 
@@ -203,8 +219,9 @@ public class PlayerScript : MonoBehaviour
         {
             Attack();
         }
-        
 
+        //Update Health
+        healthText.text = health.ToString();
     }
 
     IEnumerator AttackDelay()
@@ -241,9 +258,21 @@ public class PlayerScript : MonoBehaviour
         else if (other.gameObject.CompareTag("EnemyWalker"))
         {
             Damage(10, other, 300);
-            
 
-        }else if (other.gameObject.CompareTag("SwordPickup"))
+
+        }
+        else if (other.gameObject.CompareTag("EnemyAttacker"))
+        {
+            Damage(10, other, 300);
+
+
+        }
+        else if (other.gameObject.CompareTag("EnemySword"))
+        {
+            Damage(20, other, 300);
+
+        }
+        else if (other.gameObject.CompareTag("SwordPickup"))
         {
             CollectSword();
             other.gameObject.SetActive(false);
@@ -274,7 +303,9 @@ public class PlayerScript : MonoBehaviour
             grounded = false;
         }
     }
+
     
+
     void FixedUpdate()
     {
 
