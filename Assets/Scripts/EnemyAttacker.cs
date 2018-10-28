@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyAttacker : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class EnemyAttacker : MonoBehaviour
     public int hitForce;
     public GameObject sword;
     public bool coroutineOn;
+    public Image healthbar;
 
     private Animator anim;
     private Rigidbody2D rb2d;
@@ -22,6 +24,7 @@ public class EnemyAttacker : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        attacking = false;
         rb2d = GetComponent<Rigidbody2D>();
         sword.SetActive(false);
         coroutineOn = false;
@@ -36,8 +39,10 @@ public class EnemyAttacker : MonoBehaviour
         anim.SetBool("attacking", true);
         yield return new WaitForSeconds(.25f);
         sword.SetActive(true);
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.25f);
         sword.SetActive(false);
+        rb2d.constraints = RigidbodyConstraints2D.None;
+        rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
         yield return new WaitForSeconds(1f);
         coroutineOn = false;
         anim.SetBool("attacking", false);
@@ -78,14 +83,17 @@ public class EnemyAttacker : MonoBehaviour
 
     void Damage(float damage, Collider2D other, int force)
     {
-        Vector3 dir = other.transform.position - transform.position;
-        dir = -dir.normalized;
-        rb2d.AddForce(dir * force);
-        health -= damage;
-        if (health <= 0)
-        {
-            rb2d.gameObject.SetActive(false);
-        }
+        
+            Vector3 dir = other.transform.position - transform.position;
+            dir = -dir.normalized;
+            rb2d.AddForce(dir * force);
+            health -= damage;
+            healthbar.fillAmount -= damage / 100;
+            if (health <= 0)
+            {
+                rb2d.gameObject.SetActive(false);
+            }
+
     }
 
     void ChangeDirection()
@@ -124,10 +132,14 @@ public class EnemyAttacker : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Player"))
         {
-            Vector3 dir = other.transform.position - transform.position;
-            dir = dir.normalized;
-            if ((dir.x < 0 && movementDirection > 0)||(dir.x > 0 && movementDirection <0)) ChangeDirection();
-            attacking = true;
+            if (rb2d.transform.position.x - other.transform.position.x < 2f
+                && rb2d.transform.position.x - other.transform.position.x >-2f)
+            {
+                Vector3 dir = other.transform.position - transform.position;
+                dir = dir.normalized;
+                if ((dir.x < 0 && movementDirection > 0) || (dir.x > 0 && movementDirection < 0)) ChangeDirection();
+                attacking = true;
+            }
         }
     }
 
@@ -135,7 +147,11 @@ public class EnemyAttacker : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            attacking = true;
+            if (rb2d.transform.position.x - other.transform.position.x < 2
+               && rb2d.transform.position.x - other.transform.position.x > -2f)
+            {
+                attacking = true;
+            }
         }
     }
 
