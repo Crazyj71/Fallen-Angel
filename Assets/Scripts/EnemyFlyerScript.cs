@@ -9,6 +9,10 @@ public class EnemyFlyerScript : MonoBehaviour {
     public float attackForce;
     public float maxRunSpeed;
     public float maxMoveTime;
+    public float health;
+    public float swordDamage;
+    public float punchDamage;
+    public int hitForce;
     private Rigidbody2D rb2d;
     private float movementDirection = 1.0f;
     private float moveTime;
@@ -20,6 +24,7 @@ public class EnemyFlyerScript : MonoBehaviour {
         playerSpotted = false;
         rb2d = GetComponent<Rigidbody2D>();
         moveTime = 0.0f;
+       
     }
 
     void Movement()
@@ -32,6 +37,7 @@ public class EnemyFlyerScript : MonoBehaviour {
             movementDirection *= -1.0f;
             rb2d.velocity = new Vector2(0.0f,0.0f);
         }
+        
 
         float currentspeed = rb2d.velocity.x;
         if (currentspeed > 0)
@@ -67,9 +73,33 @@ public class EnemyFlyerScript : MonoBehaviour {
         {
            playerSpotted = true;
         }
+
+        if (other.gameObject.CompareTag("Sword"))
+        {
+            Damage(swordDamage, other.GetComponentInParent<Collider2D>(), hitForce);
+        }
+
+        if (other.gameObject.CompareTag("Arm"))
+        {
+            Damage(punchDamage, other.GetComponentInParent<Collider2D>(), hitForce);
+
+        }
+
     }
 
-     void OnTriggerExit2D(Collider2D other)
+    void Damage(float damage, Collider2D other, int force)
+    {
+        Vector3 dir = other.transform.position - transform.position;
+        dir = -dir.normalized;
+        rb2d.AddForce(dir * force);
+        health -= damage;
+        if (health <= 0)
+        {
+            rb2d.gameObject.SetActive(false);
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {

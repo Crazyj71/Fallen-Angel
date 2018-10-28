@@ -7,7 +7,8 @@ public class EnemyWalker : MonoBehaviour {
     public float runForce;
     public float maxRunSpeed;
     public float health;
-    public float dam;
+    public float punchDamage;
+    public float swordDamage;
     public int hitForce;
 
 
@@ -63,7 +64,11 @@ public class EnemyWalker : MonoBehaviour {
         }
         if(other.gameObject.CompareTag("Sword"))
         {
-            Damage(dam, other.GetComponentInParent<Collider2D>(), hitForce);
+            Damage(swordDamage, other.GetComponentInParent<Collider2D>(), hitForce);
+        }
+        if (other.gameObject.CompareTag("Arm"))
+        {
+            Damage(punchDamage, other.GetComponentInParent<Collider2D>(), hitForce);
         }
     }
     void FixedUpdate()

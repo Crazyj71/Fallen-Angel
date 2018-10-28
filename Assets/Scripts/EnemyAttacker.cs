@@ -9,11 +9,13 @@ public class EnemyAttacker : MonoBehaviour
     public float runForce;
     public float maxRunSpeed;
     public float health;
-    public float dam;
+    public float swordDamage;
+    public float punchDamage;
     public int hitForce;
     public GameObject sword;
     public bool coroutineOn;
 
+    private Animator anim;
     private Rigidbody2D rb2d;
     float movementDirection = 1.0f;
 
@@ -23,17 +25,24 @@ public class EnemyAttacker : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         sword.SetActive(false);
         coroutineOn = false;
+        anim = GetComponentInParent<Animator>();
+
     }
 
     IEnumerator AttackDelay()
     {
+        rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
         coroutineOn = true;
+        anim.SetBool("attacking", true);
         yield return new WaitForSeconds(.25f);
         sword.SetActive(true);
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(.5f);
         sword.SetActive(false);
         yield return new WaitForSeconds(1f);
         coroutineOn = false;
+        anim.SetBool("attacking", false);
+        rb2d.constraints = RigidbodyConstraints2D.None;
+        rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
     void Attack()
@@ -79,36 +88,45 @@ public class EnemyAttacker : MonoBehaviour
         }
     }
 
+    void ChangeDirection()
+    {
+        movementDirection *= -1.0f;
+        if (movementDirection < 0.0f) facingRight = false;
+        if (movementDirection > 0.0f) facingRight = true;
 
+        if (facingRight == false)
+        {
+            transform.rotation = Quaternion.Euler(0, 180f, 0);
+        }
+        else
+        {
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+
+    }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("BasicPlatform"))
         {
-            movementDirection *= -1.0f;
-
-            if (movementDirection < 0.0f) facingRight = false;
-            if (movementDirection > 0.0f) facingRight = true;
-
-            if (facingRight == false)
-            {
-                transform.rotation = Quaternion.Euler(0, 180f, 0);
-            }
-            else
-            {
-                transform.rotation = Quaternion.Euler(0, 0, 0);
-            }
-
+            ChangeDirection();
 
         }
         if (other.gameObject.CompareTag("Sword"))
         {
+            Damage(swordDamage, other.GetComponentInParent<Collider2D>(), hitForce);
 
-            Damage(dam, other.GetComponentInParent<Collider2D>(), hitForce);
+        }
+        if (other.gameObject.CompareTag("Arm"))
+        {
+            Damage(punchDamage, other.GetComponentInParent<Collider2D>(), hitForce);
 
         }
         if (other.gameObject.CompareTag("Player"))
         {
+            Vector3 dir = other.transform.position - transform.position;
+            dir = dir.normalized;
+            if ((dir.x < 0 && movementDirection > 0)||(dir.x > 0 && movementDirection <0)) ChangeDirection();
             attacking = true;
         }
     }

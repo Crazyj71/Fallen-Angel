@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class PlayerScript : MonoBehaviour
     private GameObject movingPlatform;
     private GameObject SwordSwing;
     public GameObject Sword;
+    public GameObject Arm;
 
     // Use this for initialization
 
@@ -36,22 +38,26 @@ public class PlayerScript : MonoBehaviour
                 anim.SetBool("isRunning", false);
 
             }
-            else if (grounded == true && running == true)
+            if (grounded == true && running == true)
             {
                 anim.SetBool("isRunning", true);
             }
-            else if (grounded == false)
+            if (grounded == false)
             {
                 anim.SetBool("isGrounded", false);
             }
-            else if (grounded == true)
+            if (grounded == true)
             {
                 anim.SetBool("isGrounded", true);
             }
-            else if (attacking == true)
+            if (attacking == true)
             {
-          //      this.GetComponent<Animator>().runtimeAnimatorController = animSwingingSword as RuntimeAnimatorController;
+                anim.SetBool("isSwingingSword", true);
 
+            }
+            if (attacking == false)
+            {
+                anim.SetBool("isSwingingSword", false);
             }
         }
         else
@@ -61,23 +67,26 @@ public class PlayerScript : MonoBehaviour
                 anim.SetBool("isRunning", false);
 
             }
-            else if (grounded == true && running == true)
+            if (grounded == true && running == true)
             {
                 anim.SetBool("isRunning", true);
 
             }
-            else if (grounded == false)
+            if (grounded == false)
             {
                 anim.SetBool("isGrounded", false);
             }
-            else if (grounded == true)
+            if (grounded == true)
             {
                 anim.SetBool("isGrounded", true);
             }
-            else if (attacking == true)
+            if (attacking == true)
             {
-                //this.GetComponent<Animator>().runtimeAnimatorController = animPunching as RuntimeAnimatorController;
-
+                anim.SetBool("isPunching", true);
+            }
+            if (attacking == false)
+            {
+                anim.SetBool("isPunching", false);
             }
         }
 
@@ -160,6 +169,7 @@ public class PlayerScript : MonoBehaviour
     void CollectSword()
     {
         hasSword = true;
+        anim.SetBool("hasSword", true);
     }
 
     void Attack()
@@ -173,7 +183,8 @@ public class PlayerScript : MonoBehaviour
         }
         else
         {
-            attacking = false;
+            Arm.SetActive(true);
+            StartCoroutine(PunchDelay());
         }
     }
 
@@ -183,7 +194,10 @@ public class PlayerScript : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         c2d = GetComponent<PolygonCollider2D>();
         Sword.SetActive(false);
+        Arm.SetActive(false);
         healthText.text = health.ToString();
+        anim.SetBool("hasSword", false);
+
     }
 
 
@@ -222,6 +236,18 @@ public class PlayerScript : MonoBehaviour
 
         //Update Health
         healthText.text = health.ToString();
+        if (health <= 0)
+        {
+            SceneManager.LoadScene(2);
+        }
+
+        //Let user press escape to go to the main menu
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Time.timeScale = 1;
+            Cursor.visible = true;
+            SceneManager.LoadScene(0);
+        }
     }
 
     IEnumerator AttackDelay()
@@ -231,7 +257,12 @@ public class PlayerScript : MonoBehaviour
         attacking = false;
     }
 
-
+    IEnumerator PunchDelay()
+    {
+        yield return new WaitForSeconds(.1f);
+        Arm.SetActive(false);
+        attacking = false;
+    }
 
     void OnCollisionEnter2D(Collision2D other)
     {
@@ -261,6 +292,12 @@ public class PlayerScript : MonoBehaviour
 
 
         }
+        else if (other.gameObject.CompareTag("EnemyFlyer"))
+        {
+            Damage(5, other, 300);
+
+
+        }
         else if (other.gameObject.CompareTag("EnemyAttacker"))
         {
             Damage(10, other, 300);
@@ -269,7 +306,7 @@ public class PlayerScript : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("EnemySword"))
         {
-            Damage(20, other, 300);
+            Damage(10, other, 300);
 
         }
         else if (other.gameObject.CompareTag("SwordPickup"))
