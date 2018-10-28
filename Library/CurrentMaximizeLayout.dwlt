@@ -20,10 +20,10 @@ MonoBehaviour:
     y: 30
     width: 1366
     height: 635
-  m_MinSize: {x: 683, y: 492}
-  m_MaxSize: {x: 14004, y: 14042}
+  m_MinSize: {x: 683, y: 471}
+  m_MaxSize: {x: 14002, y: 14021}
   vertical: 0
-  controlID: 21883
+  controlID: 1086
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -123,10 +123,10 @@ MonoBehaviour:
     y: 0
     width: 1086
     height: 635
-  m_MinSize: {x: 406, y: 492}
-  m_MaxSize: {x: 10002, y: 14042}
+  m_MinSize: {x: 406, y: 471}
+  m_MaxSize: {x: 10000, y: 14021}
   vertical: 1
-  controlID: 21884
+  controlID: 1087
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -150,7 +150,7 @@ MonoBehaviour:
   m_MinSize: {x: 406, y: 221}
   m_MaxSize: {x: 8006, y: 4021}
   vertical: 0
-  controlID: 21885
+  controlID: 1088
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -169,8 +169,8 @@ MonoBehaviour:
     y: 0
     width: 313
     height: 357
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 202, y: 221}
+  m_MaxSize: {x: 4002, y: 4021}
   m_ActualView: {fileID: 6}
   m_Panes:
   - {fileID: 6}
@@ -202,10 +202,10 @@ MonoBehaviour:
     height: 336
   m_PersistentViewDataDictionary: {fileID: 0}
   m_TreeViewState:
-    scrollPos: {x: 0, y: 80}
-    m_SelectedIDs: b2f6ffff
-    m_LastClickedID: -2382
-    m_ExpandedIDs: 88a4feffa4f6ffffc6f6ffff06f7ffff00000000be320000c6320000ce320000d2320000dc320000
+    scrollPos: {x: 0, y: 0}
+    m_SelectedIDs: 
+    m_LastClickedID: 0
+    m_ExpandedIDs: a6fbffffe6fbffff00000000ec0c0000f80c0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -283,14 +283,14 @@ MonoBehaviour:
     height: 336
   m_PersistentViewDataDictionary: {fileID: 0}
   m_SceneLighting: 1
-  lastFramingTime: 5505.360672950745
+  lastFramingTime: 6114.536221981049
   m_2DMode: 1
   m_isRotationLocked: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 4.2202244, y: -2.8328218, z: 0.12926379}
+    m_Target: {x: 4.314324, y: 5.513253, z: -0.20341727}
     speed: 2
-    m_Value: {x: 4.2202244, y: -2.8328218, z: 0.12926379}
+    m_Value: {x: 4.314324, y: 5.513253, z: -0.20341727}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -322,9 +322,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 16.458302
+    m_Target: 25.567396
     speed: 2
-    m_Value: 16.458302
+    m_Value: 25.567396
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -509,12 +509,8 @@ MonoBehaviour:
       e32: 0
       e33: 1
   m_PreviewAnimator: {fileID: 0}
-  m_AnimatorController: {fileID: 9100000, guid: 2716468a17877d84c819166fd6f4bba3,
-    type: 2}
-  m_BreadCrumbs:
-  - m_Target: {fileID: 1107675828605190996, guid: 2716468a17877d84c819166fd6f4bba3,
-      type: 2}
-    m_ScrollPosition: {x: 0, y: 0}
+  m_AnimatorController: {fileID: 0}
+  m_BreadCrumbs: []
   stateMachineGraph: {fileID: 0}
   stateMachineGraphGUI: {fileID: 0}
   blendTreeGraph: {fileID: 0}
@@ -600,9 +596,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 68}
-    m_SelectedIDs: 32320000
-    m_LastClickedID: 12850
-    m_ExpandedIDs: 00000000a62f0000e02f0000d43100001c32000000ca9a3b
+    m_SelectedIDs: 140c0000
+    m_LastClickedID: 3092
+    m_ExpandedIDs: 0000000018090000620900009a0b0000f60b000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -630,7 +626,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000a62f0000e02f0000d43100001c32000000ca9a3b
+    m_ExpandedIDs: 0000000018090000620900009a0b0000f60b000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -655,8 +651,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: b2f6ffff
-    m_LastClickedInstanceID: -2382
+    m_SelectedInstanceIDs: a6fbffff
+    m_LastClickedInstanceID: -1114
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000323500003c35000046350000543b00003a3700007e0b00006c2f0000942f000000000000d80b0000dc330000763200000c2b0000d62b0000
     m_RenameOverlay:

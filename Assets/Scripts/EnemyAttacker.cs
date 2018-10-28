@@ -17,6 +17,7 @@ public class EnemyAttacker : MonoBehaviour
     public bool coroutineOn;
     public Image healthbar;
 
+    private bool hit;
     private Animator anim;
     private Rigidbody2D rb2d;
     float movementDirection = 1.0f;
@@ -24,6 +25,7 @@ public class EnemyAttacker : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        hit = false;
         attacking = false;
         rb2d = GetComponent<Rigidbody2D>();
         sword.SetActive(false);
@@ -122,7 +124,11 @@ public class EnemyAttacker : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Sword"))
         {
-            Damage(swordDamage, other.GetComponentInParent<Collider2D>(), hitForce);
+            if (hit == false)
+            {
+                hit = true;
+                Damage(swordDamage, other.GetComponentInParent<Collider2D>(), hitForce);
+            }
 
         }
         if (other.gameObject.CompareTag("Arm"))
@@ -160,6 +166,9 @@ public class EnemyAttacker : MonoBehaviour
         if (other.gameObject.CompareTag("Player"))
         {
             attacking = false;
+        }
+        if (other.gameObject.CompareTag("Sword")){
+            hit = false;
         }
     }
 
