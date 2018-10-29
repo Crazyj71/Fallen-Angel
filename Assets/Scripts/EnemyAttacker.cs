@@ -31,6 +31,7 @@ public class EnemyAttacker : MonoBehaviour
         sword.SetActive(false);
         coroutineOn = false;
         anim = GetComponentInParent<Animator>();
+        anim.SetBool("attacking", false);
 
     }
 
