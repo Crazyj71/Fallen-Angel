@@ -40,7 +40,7 @@ public class EnemyAttacker : MonoBehaviour
         rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
         coroutineOn = true;
         anim.SetBool("attacking", true);
-        yield return new WaitForSeconds(.25f);
+        yield return new WaitForSeconds(.75f);
         sword.SetActive(true);
         yield return new WaitForSeconds(.25f);
         sword.SetActive(false);
@@ -157,6 +157,9 @@ public class EnemyAttacker : MonoBehaviour
             if (rb2d.transform.position.x - other.transform.position.x < 2
                && rb2d.transform.position.x - other.transform.position.x > -2f)
             {
+                Vector3 dir = other.transform.position - transform.position;
+                dir = dir.normalized;
+                if ((dir.x < 0 && movementDirection > 0) || (dir.x > 0 && movementDirection < 0)) ChangeDirection();
                 attacking = true;
             }
         }
