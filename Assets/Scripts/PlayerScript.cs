@@ -14,6 +14,8 @@ public class PlayerScript : MonoBehaviour
     public bool facingRight;
     public float health = 100f;
     public Text healthText;
+    public Text lavaText;
+    public GameObject death;
 
     private Animator anim;
     private Rigidbody2D rb2d;
@@ -236,6 +238,10 @@ public class PlayerScript : MonoBehaviour
 
         //Update Health
         healthText.text = health.ToString();
+
+        //Update Lava Distance
+        lavaText.text = Mathf.CeilToInt(transform.position.y - death.transform.position.y - 25).ToString();
+
         if (health <= 0)
         {
             SceneManager.LoadScene(2);
@@ -284,7 +290,8 @@ public class PlayerScript : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Lava"))
         {
-            Time.timeScale = 0;
+            Damage(100, other, 0);
+
         }
         else if (other.gameObject.CompareTag("EnemyWalker"))
         {
