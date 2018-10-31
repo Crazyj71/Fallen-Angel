@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 114401471045327186}
   m_Layer: 8
   m_Name: shortFall2
-  m_TagString: BasicPlatform
+  m_TagString: FallingPlatform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
