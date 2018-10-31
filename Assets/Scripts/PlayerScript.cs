@@ -120,6 +120,8 @@ public class PlayerScript : MonoBehaviour
             {
                 rb2d.AddForce(movement * runForce);
             }
+
+            SetGrounded();
         }
         else if (grounded == true && !Input.GetKey(KeyCode.Space))
         {
@@ -191,7 +193,7 @@ public class PlayerScript : MonoBehaviour
     }
 
     void Start()
-    {
+    {   
         anim = GetComponentInParent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
         c2d = GetComponent<PolygonCollider2D>();
@@ -206,6 +208,11 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
+
+
+
         if (Input.GetKeyDown(KeyCode.Space) && grounded == true)
         {
             jump = true;
@@ -338,7 +345,8 @@ public class PlayerScript : MonoBehaviour
 
 
     void OnCollisionExit2D(Collision2D other)
-    { 
+    {
+
         if (other.gameObject.CompareTag("BasicPlatform"))
         {
             grounded = false;
@@ -355,12 +363,26 @@ public class PlayerScript : MonoBehaviour
         {
             grounded = false;
         }
+
     }
 
+   void SetGrounded(){
+
+        if (rb2d.IsTouchingLayers(LayerMask.GetMask("Platforms")))
+        {
+            anim.SetBool("isGrounded", true);
+            grounded = true;
+        }
+        if (grounded)
+        {
+            anim.SetBool("isGrounded", true);
+        }
+    }
     
 
     void FixedUpdate()
     {
+        SetGrounded();
 
         Animate();
         Movement();
@@ -368,8 +390,8 @@ public class PlayerScript : MonoBehaviour
         if (jump)
         {
             Jump();
-            grounded = false;
-            anim.SetBool("isGrounded", false);
+           // grounded = false;
+           // anim.SetBool("isGrounded", false);
         }
 
     }

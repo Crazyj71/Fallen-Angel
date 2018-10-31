@@ -13,6 +13,7 @@ public class EnemyAttacker : MonoBehaviour
     public float swordDamage;
     public float punchDamage;
     public int hitForce;
+    public GameObject player;
     public GameObject sword;
     public bool coroutineOn;
     public Image healthbar;
@@ -152,7 +153,7 @@ public class EnemyAttacker : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player"))
+       /*if (other.gameObject.CompareTag("Player"))
         {
             if (rb2d.transform.position.x - other.transform.position.x < 2
                && rb2d.transform.position.x - other.transform.position.x > -2f)
@@ -162,7 +163,7 @@ public class EnemyAttacker : MonoBehaviour
                 if ((dir.x < 0 && movementDirection > 0) || (dir.x > 0 && movementDirection < 0)) ChangeDirection();
                 attacking = true;
             }
-        }
+        }*/
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -179,7 +180,16 @@ public class EnemyAttacker : MonoBehaviour
     void FixedUpdate()
     {
         Movement();
-
+        if (rb2d.transform.position.x - player.transform.position.x < 2f
+                && rb2d.transform.position.x - player.transform.position.x > -2f)
+        {
+            Vector3 dir = player.transform.position - transform.position;
+            dir = dir.normalized;
+            if ((dir.x < 0 && movementDirection > 0) || (dir.x > 0 && movementDirection < 0)) ChangeDirection();
+            attacking = true;
+        }else{
+            attacking = false;
+        }
 
     }
     // Update is called once per frame

@@ -1,20 +1,19 @@
 ﻿<Properties StartupConfiguration="{9B9B67EB-0A14-8AE2-FD91-C658161C32E7}|">
   <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="Unity.Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/PlayerScript.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/EnemyAttacker.cs">
     <Files>
-      <File FileName="Assets/Scripts/PlayerScript.cs" Line="145" Column="1" />
+      <File FileName="Assets/Scripts/PlayerScript.cs" Line="124" Column="27" />
       <File FileName="Assets/Scripts/Enemy_movement.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/EnemyWalker.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/EnemyFlyerScript.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/EnemyWalker.cs" Line="53" Column="17" />
+      <File FileName="Assets/Scripts/EnemyFlyerScript.cs" Line="115" Column="46" />
       <File FileName="Assets/Scripts/CameraScript.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/BasicPlatformScript.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/LavaScript.cs" Line="15" Column="14" />
       <File FileName="Assets/Scripts/Disappear_Platform.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/FallingPlatform.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/MovingPlatform.cs" Line="15" Column="13" />
-      <File FileName="Assets/Scripts/MovingAlong.cs" Line="13" Column="6" />
+      <File FileName="Assets/Scripts/MovingAlong.cs" Line="22" Column="6" />
       <File FileName="Assets/Scripts/SwordScript.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/EnemyAttacker.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/EnemyAttacker.cs" Line="43" Column="43" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

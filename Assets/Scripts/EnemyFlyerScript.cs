@@ -13,10 +13,12 @@ public class EnemyFlyerScript : MonoBehaviour {
     public float swordDamage;
     public float punchDamage;
     public int hitForce;
+    public float dist;
     private Rigidbody2D rb2d;
     private float movementDirection = 1.0f;
     private float moveTime;
     private bool playerSpotted;
+
 
     // Use this for initialization
     void Start()
@@ -69,10 +71,11 @@ public class EnemyFlyerScript : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        /*
         if (other.gameObject.CompareTag("Player"))
         {
            playerSpotted = true;
-        }
+        }*/
 
         if (other.gameObject.CompareTag("Sword"))
         {
@@ -109,13 +112,11 @@ public class EnemyFlyerScript : MonoBehaviour {
 
     void FixedUpdate()
     {
-        if (playerSpotted == false)
-        {
-            Movement();
-        }
-        else if (playerSpotted == true)
+        if (Mathf.Abs(transform.position.x - Player.transform.position.x) < dist && Mathf.Abs(transform.position.y - Player.transform.position.y) < dist)
         {
             MoveTowardsPlayer();
+        }else{
+            Movement();
         }
 
     }
