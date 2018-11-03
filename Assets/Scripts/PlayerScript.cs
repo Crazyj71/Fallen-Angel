@@ -13,13 +13,13 @@ public class PlayerScript : MonoBehaviour
     public bool hasSword;
     public bool facingRight;
     public float health = 100f;
+    private float maxHealth;
     public Text healthText;
     public Text lavaText;
     public GameObject death;
 
     private Animator anim;
     private Rigidbody2D rb2d;
-    private Collider2D c2d;
     public bool grounded;
     private bool running;
     private bool attacking;
@@ -28,9 +28,22 @@ public class PlayerScript : MonoBehaviour
     private GameObject SwordSwing;
     public GameObject Sword;
     public GameObject Arm;
+    public GameObject Wings;
+    public GameObject Halo;
+
+    public AudioSource soundCollectSword;
+    public AudioSource soundCollectHeart;
+    public AudioSource soundCollectWings;
+    public AudioSource soundCollectHalo;
+    public AudioSource soundRunning;
+    public AudioSource soundJumping;
+    public AudioSource snakeBite;
+    public AudioSource ghostAttack;
+    public AudioSource swoosh;
+
+    public Image healthbar;
 
     // Use this for initialization
-
     void Animate()
     {
         if (hasSword)
@@ -38,14 +51,18 @@ public class PlayerScript : MonoBehaviour
             if (grounded == true && running == false)
             {
                 anim.SetBool("isRunning", false);
+                soundRunning.Pause();
 
             }
             if (grounded == true && running == true)
             {
                 anim.SetBool("isRunning", true);
+                if(!soundRunning.isPlaying)
+                soundRunning.Play();
             }
             if (grounded == false)
             {
+                soundRunning.Pause();
                 anim.SetBool("isGrounded", false);
             }
             if (grounded == true)
@@ -66,16 +83,20 @@ public class PlayerScript : MonoBehaviour
         {
             if (grounded == true && running == false)
             {
+                soundRunning.Pause();
                 anim.SetBool("isRunning", false);
 
             }
             if (grounded == true && running == true)
             {
+                if (!soundRunning.isPlaying)
+                    soundRunning.Play();
                 anim.SetBool("isRunning", true);
 
             }
             if (grounded == false)
             {
+                soundRunning.Pause();
                 anim.SetBool("isGrounded", false);
             }
             if (grounded == true)
@@ -138,17 +159,7 @@ public class PlayerScript : MonoBehaviour
         rb2d.AddForce(new Vector2(0f, jumpForce));
         jump = false;
 
-        if (hasSword)
-        {
-          //  this.GetComponent<Animator>().runtimeAnimatorController = animJumpingWithSword as RuntimeAnimatorController;
-
-        }
-        else
-        {
-            //this.GetComponent<Animator>().runtimeAnimatorController = animJumping as RuntimeAnimatorController;
-
-        }
-
+        soundJumping.Play();
     }
 
     void Damage(int damage, Collision2D other, int force)
@@ -157,6 +168,15 @@ public class PlayerScript : MonoBehaviour
         dir = -dir.normalized;
         rb2d.AddForce(dir * force);
         health -= damage;
+        healthbar.fillAmount = health / maxHealth;
+        if(health/maxHealth < .5)
+        {
+            healthbar.color = Color.yellow;
+        }
+        if (health / maxHealth < .25)
+        {
+            healthbar.color = Color.red;
+        }
 
     }
 
@@ -181,7 +201,6 @@ public class PlayerScript : MonoBehaviour
         attacking = true;
         if (hasSword)
         {
-                Sword.SetActive(true);
                 
                 StartCoroutine(AttackDelay());
         }
@@ -196,11 +215,15 @@ public class PlayerScript : MonoBehaviour
     {   
         anim = GetComponentInParent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
-        c2d = GetComponent<PolygonCollider2D>();
+        Wings = GameObject.Find("PlayerWings");
+        Halo = GameObject.Find("PlayerHalo");
         Sword.SetActive(false);
         Arm.SetActive(false);
+        Wings.SetActive(false);
+        Halo.SetActive(false);
         healthText.text = health.ToString();
         anim.SetBool("hasSword", false);
+        maxHealth = health;
 
     }
 
@@ -208,9 +231,6 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-
-
 
 
         if (Input.GetKeyDown(KeyCode.Space) && grounded == true)
@@ -235,7 +255,6 @@ public class PlayerScript : MonoBehaviour
         else
         {
             transform.rotation = Quaternion.Euler(0, 0, 0);
-
         }
 
         if (Input.GetKeyDown(KeyCode.X) && attacking == false)
@@ -243,7 +262,10 @@ public class PlayerScript : MonoBehaviour
             Attack();
         }
 
+
+
         //Update Health
+        if (health > maxHealth) health = maxHealth;
         healthText.text = health.ToString();
 
         //Update Lava Distance
@@ -265,8 +287,12 @@ public class PlayerScript : MonoBehaviour
 
     IEnumerator AttackDelay()
     {
-        yield return new WaitForSeconds(.25f);
+        swoosh.Play();
+        yield return new WaitForSeconds(.1f);
+        Sword.SetActive(true);
+        yield return new WaitForSeconds(.05f);
         Sword.SetActive(false);
+        yield return new WaitForSeconds(.2f);
         attacking = false;
     }
 
@@ -303,13 +329,13 @@ public class PlayerScript : MonoBehaviour
         else if (other.gameObject.CompareTag("EnemyWalker"))
         {
             Damage(10, other, 300);
-
+            snakeBite.Play();
 
         }
         else if (other.gameObject.CompareTag("EnemyFlyer"))
         {
             Damage(5, other, 300);
-
+            ghostAttack.Play();
 
         }
         else if (other.gameObject.CompareTag("EnemyAttacker"))
@@ -325,8 +351,31 @@ public class PlayerScript : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("SwordPickup"))
         {
+
+            soundCollectSword.Play();
             CollectSword();
             other.gameObject.SetActive(false);
+        }
+
+        else if (other.gameObject.CompareTag("Heart"))
+        {
+            soundCollectHeart.Play();
+            other.gameObject.SetActive(false);
+            health += 50f;
+            
+        }
+        else if (other.gameObject.CompareTag("WingsPickup"))
+        {
+            soundCollectWings.Play();
+            other.gameObject.SetActive(false);
+            Wings.SetActive(true);
+            rb2d.gravityScale = 2.5f;
+        }
+        else if (other.gameObject.CompareTag("HaloPickup"))
+        {
+            soundCollectHalo.Play();
+            other.gameObject.SetActive(false);
+            Halo.SetActive(true);
         }
 
         if (grounded == true)
@@ -372,6 +421,10 @@ public class PlayerScript : MonoBehaviour
         {
             anim.SetBool("isGrounded", true);
             grounded = true;
+        }
+        else
+        {
+            grounded = false;
         }
         if (grounded)
         {

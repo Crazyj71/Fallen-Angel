@@ -17,6 +17,9 @@ TagManager:
   - EnemySword
   - Arm
   - EnemyFlyer
+  - Heart
+  - WingsPickup
+  - HaloPickup
   layers:
   - Default
   - TransparentFX
