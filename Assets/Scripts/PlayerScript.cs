@@ -30,7 +30,10 @@ public class PlayerScript : MonoBehaviour
     public GameObject Arm;
     public GameObject Wings;
     public GameObject Halo;
+    private GameObject DangerText;
 
+    private bool hasWings;
+    public float dangerTime;
     public AudioSource soundCollectSword;
     public AudioSource soundCollectHeart;
     public AudioSource soundCollectWings;
@@ -153,6 +156,9 @@ public class PlayerScript : MonoBehaviour
         
     }
 
+     
+
+
     void Jump()
     {
         rb2d.velocity = new Vector2(rb2d.velocity.x, 0);
@@ -162,6 +168,14 @@ public class PlayerScript : MonoBehaviour
         soundJumping.Play();
     }
 
+    IEnumerator TakeDamageColor()
+    {
+        GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(.1f);
+        GetComponent<SpriteRenderer>().color = Color.white;
+
+    }
+
     void Damage(int damage, Collision2D other, int force)
     {
         Vector3 dir = other.transform.position - transform.position;
@@ -169,7 +183,9 @@ public class PlayerScript : MonoBehaviour
         rb2d.AddForce(dir * force);
         health -= damage;
         healthbar.fillAmount = health / maxHealth;
-        if(health/maxHealth < .5)
+        healthbar.color = Color.green;
+
+        if (health/maxHealth < .5)
         {
             healthbar.color = Color.yellow;
         }
@@ -178,6 +194,38 @@ public class PlayerScript : MonoBehaviour
             healthbar.color = Color.red;
         }
 
+        StartCoroutine(TakeDamageColor());
+    }
+
+    void TriggerDamage(int damage, Collider2D other, int force)
+    {
+        Vector3 dir = other.transform.position - transform.position;
+        dir = -dir.normalized;
+        rb2d.AddForce(dir * force);
+        health -= damage;
+        healthbar.fillAmount = health / maxHealth;
+        healthbar.color = Color.green;
+
+        if (health / maxHealth < .5)
+        {
+            healthbar.color = Color.yellow;
+        }
+        if (health / maxHealth < .25)
+        {
+            healthbar.color = Color.red;
+        }
+
+        StartCoroutine(TakeDamageColor());
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("FireBall"))
+        {
+            TriggerDamage(5, collision, 100);
+            collision.gameObject.SetActive(false);
+
+        }
     }
 
     void DamageTrigger(int damage, Collider2D other, int force)
@@ -206,13 +254,15 @@ public class PlayerScript : MonoBehaviour
         }
         else
         {
-            Arm.SetActive(true);
             StartCoroutine(PunchDelay());
         }
     }
 
     void Start()
-    {   
+    {
+        hasWings = false;
+        hasSword = false;
+        DangerText = GameObject.Find("DANGER");
         anim = GetComponentInParent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
         Wings = GameObject.Find("PlayerWings");
@@ -224,14 +274,18 @@ public class PlayerScript : MonoBehaviour
         healthText.text = health.ToString();
         anim.SetBool("hasSword", false);
         maxHealth = health;
-
+        
     }
 
 
     // Update is called once per frame
     void Update()
     {
-
+        dangerTime -= Time.deltaTime;
+        if(dangerTime < 0)
+        {
+            DangerText.SetActive(false);
+        }
 
         if (Input.GetKeyDown(KeyCode.Space) && grounded == true)
         {
@@ -283,6 +337,7 @@ public class PlayerScript : MonoBehaviour
             Cursor.visible = true;
             SceneManager.LoadScene(0);
         }
+       
     }
 
     IEnumerator AttackDelay()
@@ -299,7 +354,10 @@ public class PlayerScript : MonoBehaviour
     IEnumerator PunchDelay()
     {
         yield return new WaitForSeconds(.1f);
+        Arm.SetActive(true);
+        yield return new WaitForSeconds(.05f);
         Arm.SetActive(false);
+        yield return new WaitForSeconds(.1f);
         attacking = false;
     }
 
@@ -307,6 +365,7 @@ public class PlayerScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("BasicPlatform"))
         {
+            
             grounded = true;
         }
         else if (other.gameObject.CompareTag("DisPlatform"))
@@ -323,7 +382,8 @@ public class PlayerScript : MonoBehaviour
         }
         else if (other.gameObject.CompareTag("Lava"))
         {
-            Damage(100, other, 0);
+            //Damage(100, other, 0);
+            SceneManager.LoadScene(2);
 
         }
         else if (other.gameObject.CompareTag("EnemyWalker"))
@@ -338,6 +398,7 @@ public class PlayerScript : MonoBehaviour
             ghostAttack.Play();
 
         }
+        
         else if (other.gameObject.CompareTag("EnemyAttacker"))
         {
             Damage(10, other, 300);
@@ -362,10 +423,13 @@ public class PlayerScript : MonoBehaviour
             soundCollectHeart.Play();
             other.gameObject.SetActive(false);
             health += 50f;
-            
+            healthbar.fillAmount = health / maxHealth;
+            healthbar.color = Color.green;
+
         }
         else if (other.gameObject.CompareTag("WingsPickup"))
         {
+            hasWings = true;
             soundCollectWings.Play();
             other.gameObject.SetActive(false);
             Wings.SetActive(true);

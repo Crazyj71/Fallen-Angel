@@ -24,14 +24,15 @@ public class EnemyFlyerScript : MonoBehaviour {
     private float initHealth;
     private Animator anim;
     private GameObject death;
-
+    private GameObject fireball;
     public AudioSource slash1;
     public AudioSource slash2;
     public AudioSource slash3;
     public AudioSource slash4;
     public AudioSource slashFinal;
     public AudioSource ghostlyAttack;
-
+    private bool isShooting;
+    private Vector2 fireDirection;
     // Use this for initialization
     void PlaySlash()
     {
@@ -56,7 +57,9 @@ public class EnemyFlyerScript : MonoBehaviour {
     void Start()
     {
         death = GameObject.Find("DeathAnimation");
+        fireball = GameObject.Find("FireBall");
         death.SetActive(false);
+        fireball.SetActive(false);
         playerSpotted = false;
         rb2d = GetComponent<Rigidbody2D>();
         moveTime = 0.0f;
@@ -101,6 +104,22 @@ public class EnemyFlyerScript : MonoBehaviour {
 
         if (rb2d.velocity.x < maxRunSpeed && rb2d.velocity.y < maxRunSpeed)
             rb2d.AddForce(attackDirection * attackForce);
+    }
+
+    IEnumerator Shoot()
+    {
+        isShooting = true;
+        fireDirection = Player.transform.position-transform.position;
+        fireDirection = fireDirection.normalized;
+        anim.SetBool("firing", true);
+        fireball.SetActive(true);
+        fireball.transform.position = transform.position;
+        
+        Debug.Log(fireball.transform.position);
+        yield return new WaitForSeconds(3f);
+        fireball.SetActive(false);
+        anim.SetBool("firing", false);
+        isShooting = false;
     }
 
 
@@ -151,8 +170,17 @@ public class EnemyFlyerScript : MonoBehaviour {
         {
             PlaySlash();
         }
+        StartCoroutine(TakeDamageColor());
+
     }
 
+    IEnumerator TakeDamageColor()
+    {
+        GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(.1f);
+        GetComponent<SpriteRenderer>().color = Color.white;
+
+    }
     void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -172,10 +200,21 @@ public class EnemyFlyerScript : MonoBehaviour {
             if(!ghostlyAttack.isPlaying && playedSound == false)
             ghostlyAttack.Play();
             playedSound = true;
-        } else {
+        }
+        else
+        {
             Movement();
             playedSound = false;
         }
+        if (Mathf.Abs(transform.position.x - Player.transform.position.x) < dist + 4 && Mathf.Abs(transform.position.y - Player.transform.position.y) < dist + 4)
+        {
+            if (isShooting == false) StartCoroutine(Shoot());
+        }
+       
+
+
+        fireball.GetComponent<Rigidbody2D>().AddForce(fireDirection * 10);
+        
 
     }
     // Update is called once per frame
@@ -187,6 +226,10 @@ public class EnemyFlyerScript : MonoBehaviour {
         }
         else transform.rotation = Quaternion.Euler(0, 0f, 0);
 
-
+        if (fireball.GetComponent<Rigidbody2D>().velocity.x < 0)
+        {
+            fireball.transform.rotation = Quaternion.Euler(0, 180f, 0);
+        }
+        else fireball.transform.rotation = Quaternion.Euler(0, 0f, 0);
     }
 }

@@ -117,6 +117,21 @@ public class EnemyAttacker : MonoBehaviour
 
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("EnemyAttacker"))
+        {
+            movementDirection *= -1.0f;
+        }
+        else if (collision.gameObject.CompareTag("Lava"))
+        {
+            rb2d.gameObject.SetActive(false);
+        }
+        else if (collision.gameObject.CompareTag("EnemyWalker"))
+        {
+            movementDirection *= -1.0f;
+        }
+    }
 
     void Damage(float damage, Collider2D other, int force)
     {
@@ -147,6 +162,16 @@ public class EnemyAttacker : MonoBehaviour
         {
             PlaySlash();
         }
+
+        StartCoroutine(TakeDamageColor());
+    }
+
+    IEnumerator TakeDamageColor()
+    {
+        GetComponent<SpriteRenderer>().color = Color.red;
+        yield return new WaitForSeconds(.1f);
+        GetComponent<SpriteRenderer>().color = Color.white;
+
     }
 
     void ChangeDirection()
