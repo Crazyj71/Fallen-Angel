@@ -268,7 +268,8 @@ public class EnemyAttacker : MonoBehaviour
 
 
         if (rb2d.transform.position.x - player.transform.position.x < 5f
-               && rb2d.transform.position.x - player.transform.position.x > -5f)
+                && rb2d.transform.position.x - player.transform.position.x > -5f && (rb2d.transform.position.y - player.transform.position.y < 5f
+                && rb2d.transform.position.y - player.transform.position.y > -5f))
         {
             if (!vocal1.isPlaying && playedSound == false)
             {
