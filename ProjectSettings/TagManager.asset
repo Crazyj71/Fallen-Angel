@@ -20,6 +20,8 @@ TagManager:
   - Heart
   - WingsPickup
   - HaloPickup
+  - FireBall
+  - Boss
   layers:
   - Default
   - TransparentFX

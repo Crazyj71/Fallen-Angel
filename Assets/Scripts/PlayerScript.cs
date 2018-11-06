@@ -17,6 +17,7 @@ public class PlayerScript : MonoBehaviour
     public Text healthText;
     public Text lavaText;
     public GameObject death;
+    private bool paused;
 
     private Animator anim;
     private Rigidbody2D rb2d;
@@ -260,6 +261,7 @@ public class PlayerScript : MonoBehaviour
 
     void Start()
     {
+        paused = false;
         hasWings = false;
         hasSword = false;
         DangerText = GameObject.Find("DANGER");
@@ -281,63 +283,81 @@ public class PlayerScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        dangerTime -= Time.deltaTime;
-        if(dangerTime < 0)
+        if (Input.GetKeyDown(KeyCode.P))
         {
-            DangerText.SetActive(false);
+            paused = !paused;
+            if (paused == true)
+            {
+                Time.timeScale = 0.0f;
+            }
+            else
+            {
+
+                Time.timeScale = 1.0f;
+            }
         }
 
-        if (Input.GetKeyDown(KeyCode.Space) && grounded == true)
+        if (paused == false)
         {
-            jump = true;
+            dangerTime -= Time.deltaTime;
+            if (dangerTime < 0)
+            {
+                DangerText.SetActive(false);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space) && grounded == true)
+            {
+                jump = true;
+            }
+
+            if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
+            {
+                running = false;
+            }
+
+            if (rb2d.IsTouchingLayers(LayerMask.NameToLayer("Platforms")))
+            {
+                anim.SetBool("isGrounded", true);
+            }
+
+            if (facingRight == false)
+            {
+                transform.rotation = Quaternion.Euler(0, 180f, 0);
+            }
+            else
+            {
+                transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
+
+            if (Input.GetKeyDown(KeyCode.X) && attacking == false)
+            {
+                Attack();
+            }
+
+
+
+            //Update Health
+            if (health > maxHealth) health = maxHealth;
+            healthText.text = health.ToString();
+
+            //Update Lava Distance
+            lavaText.text = Mathf.CeilToInt(transform.position.y - death.transform.position.y - 25).ToString();
+
+            if (health <= 0)
+            {
+                SceneManager.LoadScene(2);
+            }
+
+            //Let user press escape to go to the main menu
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Time.timeScale = 1;
+                Cursor.visible = true;
+                SceneManager.LoadScene(0);
+            }
+
+
         }
-
-        if (Input.GetKeyUp(KeyCode.LeftArrow) || Input.GetKeyUp(KeyCode.RightArrow))
-        {
-            running = false;
-        }
-
-        if (rb2d.IsTouchingLayers(LayerMask.NameToLayer("Platforms")))
-        {
-            anim.SetBool("isGrounded", true);
-        }
-
-        if (facingRight == false)
-        {
-            transform.rotation = Quaternion.Euler(0, 180f, 0);
-        }
-        else
-        {
-            transform.rotation = Quaternion.Euler(0, 0, 0);
-        }
-
-        if (Input.GetKeyDown(KeyCode.X) && attacking == false)
-        {
-            Attack();
-        }
-
-
-
-        //Update Health
-        if (health > maxHealth) health = maxHealth;
-        healthText.text = health.ToString();
-
-        //Update Lava Distance
-        lavaText.text = Mathf.CeilToInt(transform.position.y - death.transform.position.y - 25).ToString();
-
-        if (health <= 0)
-        {
-            SceneManager.LoadScene(2);
-        }
-
-        //Let user press escape to go to the main menu
-        if (Input.GetKey(KeyCode.Escape))
-        {
-            Time.timeScale = 1;
-            Cursor.visible = true;
-            SceneManager.LoadScene(0);
-        }
-       
     }
 
     IEnumerator AttackDelay()
@@ -402,6 +422,12 @@ public class PlayerScript : MonoBehaviour
         else if (other.gameObject.CompareTag("EnemyAttacker"))
         {
             Damage(10, other, 300);
+
+
+        }
+        else if (other.gameObject.CompareTag("Boss"))
+        {
+            Damage(10, other, 500);
 
 
         }
@@ -499,6 +525,7 @@ public class PlayerScript : MonoBehaviour
 
     void FixedUpdate()
     {
+        
         SetGrounded();
 
         Animate();

@@ -72,6 +72,7 @@
     <Compile Include="Assets\Scripts\EnemyFlyerScript.cs" />
     <Compile Include="Assets\Scripts\EnemyWalker.cs" />
     <Compile Include="Assets\Scripts\FallingPlatform.cs" />
+    <Compile Include="Assets\Scripts\HellBossScript.cs" />
     <Compile Include="Assets\Scripts\LavaScript.cs" />
     <Compile Include="Assets\Scripts\MoveVerticalPlatform.cs" />
     <Compile Include="Assets\Scripts\MovingAlong.cs" />
